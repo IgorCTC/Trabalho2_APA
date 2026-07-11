@@ -71,8 +71,7 @@ da matriz correspondentes aos elementos nulos.
 
 
 # Divisão:
-
-- PDF Apagador: thales
-- Verificar se é conexo: Igor
-- Verificar se é círcuito: Vitor
-- Algoritmo de busca ?(foi o que sobrou): Filipe 
+- Algoritmo que verifica conectividade: Igor
+- Algoritmo apagador: Thales
+- Algoritmo de busca: Victor
+- 2 Algs com IA + apresentação: Filipe
