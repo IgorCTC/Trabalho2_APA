@@ -28,6 +28,7 @@ private:
     vector<bool> estaNaPilhaAtiva;   // Controla se o vértice está na rota atual de exploração (evita ciclos)
     stack<int> caminhoExploracao;    // Pilha que guarda a rota exata que o explorador está percorrendo
     bool circuitoEncontrado;         // Sinalizador para interromper a busca assim que detectar um circuito
+    int verticeInicioCiclo;          // Guarda o vértice onde o ciclo foi detectado para exibição posterior
 
     // Procedimento recursivo de busca em profundidade (DFS)
     void explorarVertice(int verticeAtual) {
@@ -51,7 +52,7 @@ private:
             // Isso significa que acabamos de fechar um ciclo (circuito)!
             else if (estaNaPilhaAtiva[vizinho]) { 
                 circuitoEncontrado = true;
-                imprimirCircuitoDetectado(vizinho);
+                verticeInicioCiclo = vizinho; // Marca o ponto de início do ciclo para exibição
                 return;
             }
         }
@@ -65,7 +66,7 @@ private:
     }
 
     // Recupera a rota de dentro da pilha e exibe o ciclo na tela
-    void imprimirCircuitoDetectado(int verticeInicioCiclo) {
+    void imprimirCircuitoDetectado() {
         vector<int> rotaInvertida;
         stack<int> pilhaTemporaria = caminhoExploracao;
         
@@ -81,7 +82,6 @@ private:
         // Como extraímos da pilha (do topo para a base), invertemos para mostrar na ordem correta
         reverse(rotaInvertida.begin(), rotaInvertida.end());
 
-        cout << "Circuito detectado: ";
         for (int vertice : rotaInvertida) {
             cout << indiceParaNome[vertice] << " -> ";
         }
@@ -139,6 +139,8 @@ public:
         this->listaAdjacencia.assign(totalVertices, list<int>());
         this->foiVisitado.assign(totalVertices, false);
         this->estaNaPilhaAtiva.assign(totalVertices, false);
+        this->circuitoEncontrado = false;
+        this->verticeInicioCiclo = -1;
 
         // 2. Extrair os arcos (arestas direcionadas)
         // Expressão regular para capturar pares no formato (origem,destino)
@@ -227,6 +229,8 @@ public:
         this->listaAdjacencia.assign(totalVertices, list<int>());
         this->foiVisitado.assign(totalVertices, false);
         this->estaNaPilhaAtiva.assign(totalVertices, false);
+        this->circuitoEncontrado = false;
+        this->verticeInicioCiclo = -1;
 
         // 2. Extração dos Arcos (Arestas)
         regex regexArcos(R"(\(([^,]+),([^)]+)\))");
@@ -290,6 +294,7 @@ public:
 
         if (circuitoEncontrado) {
             cout << "Resultado: SUCESSO (Circuito encontrado)" << endl;
+            imprimirCircuitoDetectado();
         } else {
             cout << "Resultado: FRACASSO (Nenhum circuito encontrado no grafo)" << endl;
         }
