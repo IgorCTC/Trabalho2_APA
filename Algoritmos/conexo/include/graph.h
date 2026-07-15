@@ -6,33 +6,36 @@
 #include <stdio.h>
 #include <string>
 #include <string.h>
+#include <vector>
+
+using namespace std;
 
 
 class vertice{
 public:
-    vertice(std::string name) : name(name) {}
-    std::string getName() { return name; }
-    List<std::string> getAdjacents() { return adjacents; }
-    void setName(std::string name) { this->name = name; }
-    
-    void addAdjacent(std::string v) {
+    vertice(string name) : name(name) {}
+    string getName() { return name; }
+    List<string> getAdjacents() { return adjacents; }
+    void setName(string name) { this->name = name; }
+
+    void addAdjacent(string v) {
         for(int i = 0; i < adjacents.get_size(); i++)
             if(strcmp(adjacents.get(i).c_str(), v.c_str()) == 0) return;
         adjacents.push_back(v); 
     }
     
 private:
-    std::string name;
-    List<std::string> adjacents;
+    string name;
+    List<string> adjacents;
 };
 
 class Graph {
 public:
-    Graph(List<std::string> vertices_id, List<Connection*> connections) : num_vertices(vertices_id.get_size()), connections(connections) {
+    Graph(List<string> vertices_id, List<Connection*> connections) : num_vertices(vertices_id.get_size()), connections(connections) {
         adjcentMatrix(vertices_id);
     }
-    
-    void adjcentMatrix(List<std::string> vertices_id){
+
+    void adjcentMatrix(List<string> vertices_id){
         for(int i = 0; i < num_vertices; i++)
         {
             this->vertices.push_back(new vertice(vertices_id.get(i)));
@@ -55,7 +58,7 @@ public:
         
         for(int i=0;i<num_vertices;i++)
         {
-            List<std::string> adjacents = vertices.get(i)->getAdjacents();
+            List<string> adjacents = vertices.get(i)->getAdjacents();
             for(int j=0; j<num_vertices; j++)
             {
                 bool isAdjacent = false;
@@ -70,6 +73,26 @@ public:
             }
             printf("\n");
         }
+    }
+
+        vector<vector<int>> getAdjacencyMatrix() {
+        List<vertice*> vertices = getVertices();
+        vector<vector<int>> A(num_vertices, vector<int>(num_vertices, 0));
+
+        for(int i=0;i<num_vertices;i++)
+        {
+            List<string> adjacents = vertices.get(i)->getAdjacents();
+            for(int j=0; j<num_vertices; j++)
+            {
+                bool isAdjacent = false;
+                for(int k=0; k<adjacents.get_size(); k++)
+                    if(strcmp(adjacents.get(k).c_str(), vertices.get(j)->getName().c_str()) == 0)
+                        isAdjacent = true;
+
+                A[i][j] = isAdjacent ? 1 : 0;
+            }
+        }
+        return A;
     }
     
     List<vertice*> getVertices() { return vertices; }    
