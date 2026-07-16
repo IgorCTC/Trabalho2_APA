@@ -3,7 +3,7 @@
 
 #include <string>
 #include <cstring>
-#include "list.h"
+#include "../../Lista/include/list.h"
 
 class vertice{
 public:
