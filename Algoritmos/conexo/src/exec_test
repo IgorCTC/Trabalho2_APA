@@ -1,1 +1,1 @@
-g++ test.cpp -o ../bin/test && ./../bin/test
+g++ *.cpp -o ../bin/test && ./../bin/test

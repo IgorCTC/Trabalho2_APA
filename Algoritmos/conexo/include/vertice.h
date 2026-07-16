@@ -15,6 +15,7 @@ public:
     void addAdjacent(vertice* v) {
         for(int i = 0; i < adjacents.get_size(); i++)
             if(adjacents.get(i) == v) return;
+        
         adjacents.push_back(v); 
     }
     

@@ -3,7 +3,10 @@
 
 #include "vertice.h"
 #include <stdlib.h>
+
+#include <initializer_list>
 #include <string>
+#include <unordered_map>
 
 class Connection {
     public:
@@ -13,6 +16,7 @@ class Connection {
             this->weight = weight;
             this->is_directed = is_directed;
         }
+
         int getWeight() { return weight; };
         bool isDirected() { return is_directed; };
         vertice* getHead() { return h_vertice; };

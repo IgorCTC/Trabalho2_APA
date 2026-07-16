@@ -4,37 +4,34 @@
 
 #include "../include/list.h"
 #include "../include/graph.h"
+#include <utility>
 
 int main() {
-    List<std::string> vertices_id;
-    List<Connection*> connections;
-
-    vertices_id.push_back("a");
-    vertices_id.push_back("b");
-    vertices_id.push_back("c");
-    vertices_id.push_back("d");
+    List<Connection*> connections_id;
     
-    connections.push_back(new Connection("a", "b"));
-    connections.push_back(new Connection("b", "c"));
-    connections.push_back(new Connection("c", "d"));
-    connections.push_back(new Connection("d", "a"));
+    List<std::string> vertices_id({"a", "b", "c", "d", "e", "f", "g"});
+    List<std::pair<std::string, std::string>> connections({
+            {"a", "b"},
+            {"a", "e"},
+            {"b", "c"},
+            {"c", "d"},
+            {"d", "e"},
+            {"c", "f"},
+            {"f", "g"}
+        });
+    
+    for(int i = 0; i < connections.get_size(); i++) {
+        auto pair = connections.get(i);
+        connections_id.push_back(new Connection(pair.first, pair.second));
+    }
 
     printf("Matriz de adjacência:\n");
-    Graph graph(vertices_id, connections);
+    Graph graph(vertices_id, connections_id,true);
     graph.printAdjacencyMatrix();
     printf("Fecho transitivo:\n");
+    graph.printFechoGrafo();
 
-
-
-    for(int i=0; i<vertices_id.get_size(); i++)
-    {
-        vertice *v = graph.getVertices().get(i);
-        List<vertice*> fecho = graph.AuxFecho(v);
-        printf("%s ->", vertices_id.get(i).c_str());        
-        for(int j=0; j<fecho.get_size(); j++)
-            printf("%s ", fecho.get(j)->getName().c_str());
-        printf("\n");
-    }
+    printf("O grafo é conexo? %s\n", graph.ehConexo() ? "Sim" : "Não");
     
     printf("\n");
     
