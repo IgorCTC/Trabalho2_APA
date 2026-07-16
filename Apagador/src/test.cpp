@@ -5,7 +5,7 @@
 
 #include "../include/list.h"
 #include "../include/graph.h"
-
+#include "../include/apagador.h"
 
 int main() {
     List<std::string> vertices_id;
@@ -24,6 +24,10 @@ int main() {
     printf("Matriz de adjacência:\n");
     Graph graph(vertices_id, connections);
     graph.printAdjacencyMatrix();
+
+    printf("\n\nTeste do algoritmo apagador:\n");
+    std::string resultado = apagador(graph, true); 
+    printf("Resultado: %s\n", resultado.c_str());
 
     return 0;
 }
