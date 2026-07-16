@@ -1,29 +1,40 @@
 #include <cstdio>
-#include <cstdlib>
 #include <stdlib.h>
 #include <string>
 
-#include "../include/list.h"
-#include "../include/graph.h"
+#include "../../../Grafo/include/connection.h"
+
+#include "../../../Grafo/include/graph.h"
+#include <utility>
 
 
 int main() {
-    List<std::string> vertices_id;
-    List<Connection*> connections;
-
-    vertices_id.push_back("a");
-    vertices_id.push_back("b");
-    vertices_id.push_back("c");
-    vertices_id.push_back("d");
-
-    connections.push_back(new Connection("a", "b"));
-    connections.push_back(new Connection("b", "c"));
-    connections.push_back(new Connection("c", "d"));
-    connections.push_back(new Connection("d", "a"));
+    List<Connection*> connections_id;
+    
+    List<std::string> vertices_id({"a", "b", "c", "d", "e", "f", "g"});
+    List<std::pair<std::string, std::string>> connections({
+            {"a", "b"},
+            {"a", "e"},
+            {"b", "c"},
+            {"c", "d"},
+            {"d", "e"},
+            {"c", "f"},
+            {"f", "g"}
+        });
+    
+    for(int i = 0; i < connections.get_size(); i++) {
+        auto pair = connections.get(i);
+        connections_id.push_back(new Connection(pair.first, pair.second));
+    }
 
     printf("Matriz de adjacência:\n");
-    Graph graph(vertices_id, connections);
+    Graph graph(vertices_id, connections_id,true);
     graph.printAdjacencyMatrix();
+    printf("Fecho transitivo:\n");
+    graph.printFechoGrafo();
 
-    return 0;
+    printf("O grafo é conexo? %s\n", graph.ehConexo() ? "Sim" : "Não");
+    
+    printf("\n");
+    
 }

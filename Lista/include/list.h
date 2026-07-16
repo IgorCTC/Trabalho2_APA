@@ -1,6 +1,9 @@
 #ifndef LIST_H
 #define LIST_H
+
 #include <stdlib.h>
+#include <initializer_list>
+
 template<typename T>
 class Node{
     public:
@@ -16,10 +19,13 @@ template<typename T>
 class List{
     public:
         List() : head(nullptr), tail(nullptr), size(0) {}
-
+        List(std::initializer_list<T> data): head(nullptr), tail(nullptr), size(0) {
+            for(auto it = data.begin(); it != data.end(); it++) push_back(*it);
+        }
+        
         void push_back(T data){
             Node<T> *newnode = (Node<T>*)malloc(sizeof(Node<T>));
-            newnode-> data = data;
+            newnode->data = data;
             newnode->next = nullptr;
             if (tail) tail->next = newnode;
             tail = newnode;
