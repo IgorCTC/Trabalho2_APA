@@ -1,4 +1,4 @@
-#include "../include/graph.h"
+#include "../../../Grafo/include/graph.h"
 
 List<vertice*> Graph::fecho_transitivo_OVE(vertice* v)
 {

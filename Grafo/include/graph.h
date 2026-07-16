@@ -1,7 +1,7 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include "list.h"
+#include "../../Lista/include/list.h"
 #include "connection.h"
 #include <stdio.h>
 #include <string>

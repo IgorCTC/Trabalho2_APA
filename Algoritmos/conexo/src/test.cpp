@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <string>
 
-#include "../include/list.h"
-#include "../include/graph.h"
+#include "../../../Grafo/include/connection.h"
+
+#include "../../../Grafo/include/graph.h"
 #include <utility>
 
 int main() {
