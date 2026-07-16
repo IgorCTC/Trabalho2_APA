@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include "../../Grafo/include/graph.h"
+#include "../../verifica_conexo/Grafo/include/graph.h"
 
 using namespace std;
 

@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string>
 
-#include "../../Lista/include/list.h"
-#include "../../Grafo/include/graph.h"
+#include "../../verifica_conexo/Lista/include/list.h"
+#include "../../verifica_conexo/Grafo/include/graph.h"
 #include "../include/apagador.h"
 
 int main() {

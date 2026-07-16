@@ -10,6 +10,7 @@
 
 #include <unordered_set>
 #include <unordered_map>
+#include <vector>
 
 class Graph {
 public:
@@ -47,6 +48,38 @@ public:
                 }
             }
         }
+    }
+
+    std::vector<std::vector<int>> getAdjacencyMatrix() {
+        std::vector<std::vector<int>> A(
+            num_vertices,
+            std::vector<int>(num_vertices, 0)
+        );
+
+        for (int i = 0; i < num_vertices; i++) {
+
+            vertice* v = vertices[vertices_id[i]];
+
+            List<vertice*> adj = v->getAdjacents();
+
+            for (int k = 0; k < adj.get_size(); k++) {
+
+                std::string nome = adj.get(k)->getName();
+
+                for (int j = 0; j < num_vertices; j++) {
+
+                    if (vertices_id[j] == nome) {
+                        A[i][j] = 1;
+                        break;
+                    }
+
+                }
+
+            }
+
+        }
+
+        return A;
     }
 
     void printAdjacencyMatrix() {
