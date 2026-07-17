@@ -1,7 +1,6 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include "../../Lista/include/list.h"
 #include "connection.h"
 #include <stdio.h>
 #include <string>
@@ -14,23 +13,23 @@
 
 class Graph {
 public:
-    Graph(List<std::string>& vertices_id, const List<Connection*>& connections, bool simetric=false) : num_vertices(vertices_id.get_size()), connections(connections), simetric(simetric) {
+    Graph(std::vector<std::string>& vertices_id, const std::vector<Connection*>& connections, bool simetric=false) : num_vertices(vertices_id.size()), connections(connections), simetric(simetric) {
         fillAdjacents(vertices_id);
     }
     
-    void fillAdjacents(List<std::string> vertices_id){
+    void fillAdjacents(std::vector<std::string> vertices_id){
         for(int i = 0; i < num_vertices; i++)
         {
-            this->vertices[vertices_id.get(i)] = new vertice(vertices_id.get(i));
-            this->vertices_id[i] = vertices_id.get(i);
+            this->vertices[vertices_id[i]] = new vertice(vertices_id[i]);
+            this->vertices_id[i] = vertices_id[i];
         }
             
         for(int i = 0; i < num_vertices; i++)
         {
-            for(int j = 0; j < connections.get_size(); j++)
+            for(int j = 0; j < connections.size(); j++)
             {
-                vertice* head = connections.get(j)->getHead();
-                vertice* tail = connections.get(j)->getTail();
+                vertice* head = connections[j]->getHead();
+                vertice* tail = connections[j]->getTail();
 
                 if(simetric)
                 {
@@ -49,39 +48,7 @@ public:
             }
         }
     }
-
-    std::vector<std::vector<int>> getAdjacencyMatrix() {
-        std::vector<std::vector<int>> A(
-            num_vertices,
-            std::vector<int>(num_vertices, 0)
-        );
-
-        for (int i = 0; i < num_vertices; i++) {
-
-            vertice* v = vertices[vertices_id[i]];
-
-            List<vertice*> adj = v->getAdjacents();
-
-            for (int k = 0; k < adj.get_size(); k++) {
-
-                std::string nome = adj.get(k)->getName();
-
-                for (int j = 0; j < num_vertices; j++) {
-
-                    if (vertices_id[j] == nome) {
-                        A[i][j] = 1;
-                        break;
-                    }
-
-                }
-
-            }
-
-        }
-
-        return A;
-    }
-
+    
     void printAdjacencyMatrix() {
         printf("   ");
         for(int i=0;i<num_vertices;i++)
@@ -90,14 +57,14 @@ public:
         
         for(int i=0;i<num_vertices;i++)
         {
-            List<vertice*> adjacents = vertices[vertices_id[i]]->getAdjacents();
+            std::vector<vertice*> adjacents = vertices[vertices_id[i]]->getAdjacents();
             printf("%s  ", vertices_id[i].c_str());
             
             for(int j=0; j<num_vertices; j++)
             {
                 bool isAdjacent = false;
-                for(int k=0; k<adjacents.get_size(); k++)
-                    if(adjacents.get(k)->getName() == vertices_id[j])
+                for(int k=0; k<adjacents.size(); k++)
+                    if(adjacents[k]->getName() == vertices_id[j])
                         isAdjacent = true;
                 
                 if(isAdjacent)
@@ -109,33 +76,34 @@ public:
         }
     }
 
-    List<vertice*> fecho_transitivo_OVE(vertice* v);
+    std::vector<vertice*> fecho_transitivo_OVE(vertice* v);
 
-    void aux_fecho(vertice* v, List<vertice*> *visited, std::unordered_set<vertice*>* visited_set);
+    void aux_fecho(vertice* v, std::vector<vertice*> *visited, std::unordered_set<vertice*>* visited_set);
 
     void printFechoGrafo(){
         for(int i=0; i<vertices_id.size(); i++)
         {
             vertice *v = vertices[vertices_id[i]];        
-            List<vertice*> fecho = fecho_transitivo_OVE(v);
+            std::vector<vertice*> fecho = fecho_transitivo_OVE(v);
             printf("%s ->", vertices_id[i].c_str());       
             
-            for(int j=0; j<fecho.get_size(); j++)
-                printf("%s ", fecho.get(j)->getName().c_str());
+            for(int j=0; j<fecho.size(); j++)
+                printf("%s ", fecho[j]->getName().c_str());
             printf("\n");
         }
     }
 
     bool ehConexo();
+    void readGraphFromFile(const std::string& filename,std::vector<std::string>& vertices,std::vector<Connection*>& connections);
     
     std::unordered_map<std::string, vertice*> getVertices() { return vertices; }
     std::unordered_map<int, std::string> getVertices_id() { return vertices_id; }    
     
-    List<Connection*> getConnections() { return connections; }
+    std::vector<Connection*> getConnections() { return connections; }
     int getNumVertices() { return num_vertices; }
     
 private:
-    List<Connection*> connections;
+    std::vector<Connection*> connections;
     std::unordered_map<int,std::string> vertices_id;
     std::unordered_map<std::string, vertice*> vertices;
     bool simetric;
