@@ -46,7 +46,7 @@ inline bool apagador(const vector<vector<int>>& A, int n, bool verbose = false) 
         }
     }
 
-    return (totalApagados == n) ? true : false;
+    return (totalApagados == n) ? false : true;
 }
 
 inline bool apagador(Graph& g, bool verbose = false) {

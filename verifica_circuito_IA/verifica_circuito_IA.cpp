@@ -3,6 +3,7 @@
 #include <sstream>
 #include <vector>
 #include <unordered_map>
+#include <chrono>
 
 using namespace std;
 
@@ -107,20 +108,23 @@ bool possuiCircuito(const vector<vector<int>>& grafo) {
 }
 
 
-int main() {
+int main(int argc, char** argv) {
+    const string instancePath = (argc > 1) ? argv[1] : "../../instances/g1.txt";
 
     vector<vector<int>> grafo;
     unordered_map<string, int> indice;
 
-    if (!lerGrafo("../instances/g1.txt", grafo, indice)) {
+    if (!lerGrafo(instancePath, grafo, indice)) {
         cout << "Erro ao abrir o arquivo.\n";
         return 1;
     }
 
-    if (possuiCircuito(grafo))
-        cout << "O grafo possui circuito.\n";
-    else
-        cout << "O grafo nao possui circuito.\n";
+    const auto start = chrono::steady_clock::now();
+    bool resultado = possuiCircuito(grafo);
+    const auto end = chrono::steady_clock::now();
+    const auto elapsed_ns = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
+
+    cout << "verifica_circuito_IA," << instancePath << "," << static_cast<long long>(elapsed_ns) << "," << (resultado ? 1 : 0) << '\n';
 
     return 0;
 }

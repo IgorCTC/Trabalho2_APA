@@ -27,7 +27,7 @@ public:
         fillAdjacents(vertices_id);
     }
     
-    void fillAdjacents(std::vector<std::string> vertices_id){
+    void fillAdjacents(std::vector<std::string> vertices_id) {
         for(int i = 0; i < num_vertices; i++)
         {
             this->vertices[vertices_id[i]] = new vertice(vertices_id[i]);

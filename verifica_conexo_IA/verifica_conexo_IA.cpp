@@ -4,6 +4,7 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include <chrono>
 
 using namespace std;
 
@@ -89,20 +90,22 @@ bool verificarConexo(const vector<vector<int>>& grafo) {
     return true;
 }
 
-int main() {
+int main(int argc, char** argv) {
+    const string instancePath = (argc > 1) ? argv[1] : "../../instances/g1.txt";
     vector<vector<int>> grafo;
     unordered_map<string, int> indice;
 
-    if (!lerGrafo("../instances/g1.txt", grafo, indice)) {
+    if (!lerGrafo(instancePath, grafo, indice)) {
         cout << "Erro ao abrir arquivo.\n";
         return 1;
     }
 
-    bool conexo = verificarConexo(grafo);
-    if (conexo)
-        cout << "O grafo é conexo.\n";
-    else
-        cout << "O grafo não é conexo.\n";
+    const auto start = chrono::steady_clock::now();
+    bool resultado = verificarConexo(grafo);
+    const auto end = chrono::steady_clock::now();
+    const auto elapsed_ns = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
+
+    cout << "verifica_conexo_IA," << instancePath << "," << static_cast<long long>(elapsed_ns) << "," << (resultado ? 1 : 0) << '\n';
 
     return 0;
 }

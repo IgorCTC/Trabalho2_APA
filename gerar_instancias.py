@@ -8,9 +8,9 @@ from pathlib import Path
 
 # Ajuste estes valores diretamente no codigo.
 OUTPUT_DIR = Path("instances")
-VERTEX_COUNTS = [10, 20, 40, 80]
+VERTEX_COUNTS = [50, 100, 200, 300, 500]
 INSTANCES_PER_COUNT = 5
-EDGE_COUNT_START_PERCENT = 80
+EDGE_COUNT_START_PERCENT = 120
 EDGE_COUNT_STEP_PERCENT = 20
 SEED = 42
 OVERWRITE = True
