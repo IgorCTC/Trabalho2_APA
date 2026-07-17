@@ -10,16 +10,10 @@ int main() {
     std::vector<Connection*> connections;
 
     Graph graph;
-    graph.readGraphFromFile("../instances/g1.txt", vertices_id, connections, false);
+    graph.readGraphFromFile("../../instances/g1.txt", vertices_id, connections, false);
     graph.initialize_graph(vertices_id, connections, false);
 
-    printf("Matriz de adjacência:\n");
-    graph.printAdjacencyMatrix();
-
-    
-    printf("\n\nTeste do algoritmo apagador:\n");
-    std::string resultado = apagador(graph, false); 
-    printf("Resultado: %s\n", resultado.c_str());
+    bool resultado = apagador(graph, false); 
 
     return 0;
 }

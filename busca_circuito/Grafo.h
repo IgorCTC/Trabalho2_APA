@@ -197,7 +197,7 @@ public:
         listaAdjacencia[origem].push_back(destino);
     }
 
-    void buscarCircuito() {
+    bool buscarCircuito() {
         circuitoEncontrado = false;
         
         fill(foiVisitado.begin(), foiVisitado.end(), false);
@@ -212,11 +212,6 @@ public:
             }
         }
 
-        if (circuitoEncontrado) {
-            cout << "Resultado: SUCESSO (Circuito encontrado)" << endl;
-            imprimirCircuitoDetectado();
-        } else {
-            cout << "Resultado: FRACASSO (Nenhum circuito encontrado no grafo)" << endl;
-        }
+        return circuitoEncontrado;
     }
 };

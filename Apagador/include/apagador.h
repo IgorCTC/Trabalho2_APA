@@ -8,7 +8,7 @@
 
 using namespace std;
 
-inline string apagador(const vector<vector<int>>& A, int n, bool verbose = false) {
+inline bool apagador(const vector<vector<int>>& A, int n, bool verbose = false) {
     vector<int> V(n, 0);
     vector<bool> apagado(n, false);
     int totalApagados = 0;
@@ -46,10 +46,10 @@ inline string apagador(const vector<vector<int>>& A, int n, bool verbose = false
         }
     }
 
-    return (totalApagados == n) ? "fracasso" : "sucesso";
+    return (totalApagados == n) ? true : false;
 }
 
-inline string apagador(Graph& g, bool verbose = false) {
+inline bool apagador(Graph& g, bool verbose = false) {
     return apagador(g.getAdjacencyMatrix(), g.getNumVertices(), verbose);
 }
 
