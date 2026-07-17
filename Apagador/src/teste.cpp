@@ -26,7 +26,7 @@ int main() {
     graph.printAdjacencyMatrix();
 
     printf("\n\nTeste do algoritmo apagador:\n");
-    std::string resultado = apagador(graph, true); 
+    std::string resultado = apagador(graph, false); 
     printf("Resultado: %s\n", resultado.c_str());
 
     return 0;
